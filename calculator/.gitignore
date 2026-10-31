@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+.venv/
+.streamlit/secrets.toml
+*.log
+egfrdiff_results.csv

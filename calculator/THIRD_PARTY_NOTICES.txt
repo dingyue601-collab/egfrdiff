@@ -1,0 +1,17 @@
+TabM 0.0.3
+https://github.com/yandex-research/tabm
+The original Python module is distributed unchanged in vendor/tabm.py.
+License: Apache License 2.0; see LICENSES/TabM-Apache-2.0.txt.
+
+rtdl-num-embeddings 0.0.12
+https://github.com/yandex-research/rtdl-num-embeddings
+The original Python module is distributed unchanged in vendor/rtdl_num_embeddings.py.
+License: Apache License 2.0; see LICENSES/rtdl-num-embeddings-Apache-2.0.txt.
+
+Other Python and R dependencies are referenced in the requirements files and are
+not distributed in this archive. Their respective licenses apply.
+
+The application-specific source code is distributed under Apache-2.0; see LICENSE.
+Bundled upstream components retain their original licenses and notices.
+Fitted checkpoints and preprocessing artifacts are supplied for model inference.
+No patient-level training or validation records are distributed.

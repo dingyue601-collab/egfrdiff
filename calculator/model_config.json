@@ -1,0 +1,36 @@
+{
+  "version": "TabM9_Platt80_seed123_v1",
+  "features": [
+    "age",
+    "sex",
+    "scr",
+    "hba1c",
+    "hemoglobin",
+    "uric_acid",
+    "albumin",
+    "alp",
+    "ada"
+  ],
+  "classes": [
+    0,
+    1
+  ],
+  "target": "Relative eGFRdiff < -30%",
+  "models": 30,
+  "members": 32,
+  "precision": "float32",
+  "platt_intercept": -0.49573873652975892,
+  "platt_slope": 1.0080486041472883,
+  "threshold80": 0.16368626228846581,
+  "units": {
+    "age": "years",
+    "sex": "0 female; 1 male",
+    "scr": "umol/L",
+    "hba1c": "%",
+    "hemoglobin": "g/L",
+    "uric_acid": "umol/L",
+    "albumin": "g/L",
+    "alp": "U/L",
+    "ada": "U/L"
+  }
+}
