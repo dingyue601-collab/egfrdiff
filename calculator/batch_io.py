@@ -1,4 +1,5 @@
 """CSV input and batch inference for the nine-variable model."""
+import codecs
 import csv
 from io import StringIO
 import pandas as pd
@@ -29,14 +30,36 @@ def template(language="en"):
 
 
 def read_csv(content):
-    text = content.decode("utf-8-sig")
-    headers = [name.strip() for name in next(csv.reader(StringIO(text)), [])]
+    """Read UTF-8, GB18030 or BOM-marked UTF-16 without repairing malformed rows."""
+    if content.startswith((codecs.BOM_UTF16_LE, codecs.BOM_UTF16_BE)):
+        text = content.decode("utf-16")
+    else:
+        try:
+            text = content.decode("utf-8-sig")
+        except UnicodeDecodeError:
+            try:
+                text = content.decode("gb18030")
+            except UnicodeDecodeError as exc:
+                raise ValueError("Unsupported CSV encoding / 请使用UTF-8、GB18030或UTF-16编码") from exc
+    if "\x00" in text:
+        raise ValueError("CSV contains null characters / CSV包含无效空字符")
+    reader = csv.reader(StringIO(text), strict=True)
+    try:
+        headers = [name.strip() for name in next((row for row in reader if row), [])]
+        rows = []
+        for row in reader:
+            if not row:
+                continue
+            if len(row) != len(headers):
+                raise ValueError(f"CSV line {reader.line_num}: wrong number of fields / 第{reader.line_num}行列数与表头不一致")
+            rows.append(row)
+    except csv.Error as exc:
+        raise ValueError(f"Invalid CSV near line {reader.line_num} / 第{reader.line_num}行附近CSV格式错误") from exc
     aliases = {**HEADERS, **{v: k for k, v in column_labels("zh").items()}}
     columns = [aliases.get(name, name) for name in headers]
     if len(set(headers)) != len(headers) or len(set(columns)) != len(columns):
         raise ValueError("Duplicate column names / 列名重复")
-    frame = pd.read_csv(StringIO(text), dtype=str, keep_default_na=False)
-    frame.columns = columns
+    frame = pd.DataFrame(rows, columns=columns)
     missing = [name for name in HEADERS.values() if name not in frame]
     if "Patient" not in frame or missing:
         raise ValueError("Use the CSV template / 请使用CSV模板: " + ", ".join(missing))
@@ -48,9 +71,9 @@ def check_rows(frame, language="en"):
     ids = frame["Patient"].fillna("").astype(str).str.strip()
     duplicate = ids.duplicated(keep=False)
     problems, warnings, cells = [], [], []
-    for i, row in numeric.iterrows():
+    for i, (_, row) in enumerate(numeric.iterrows()):
         bad, soft = check_inputs(row.to_dict(), language)
-        if not ids.loc[i] or duplicate.loc[i]:
+        if not ids.iloc[i] or duplicate.iloc[i]:
             bad["Patient"] = "Missing or duplicate record ID" if language == "en" else "记录编号缺失或重复"
         names = column_labels(language)
         label = lambda key: names.get("Patient", "Patient") if key == "Patient" else names.get(HEADERS[key], HEADERS[key])
@@ -81,5 +104,10 @@ def predict_batch(frame, predictor, language="en", confirm_ranges=False):
 def csv_bytes(frame, language="en"):
     export = frame.copy()
     if "Patient" in export:
-        export["Patient"] = export["Patient"].map(lambda x: "'" + str(x) if str(x).startswith(("=", "+", "-", "@")) else str(x))
-    return export.rename(columns=column_labels(language)).to_csv(index=False).encode("utf-8-sig")
+        export["Patient"] = export["Patient"].astype(str)
+    def spreadsheet_text(value):
+        if isinstance(value, str) and value.lstrip().startswith(("=", "+", "-", "@", "＝", "＋", "－", "＠")):
+            return "\t" + value.lstrip("\t")
+        return value
+    export = export.map(spreadsheet_text)
+    return export.rename(columns=column_labels(language)).to_csv(index=False, quoting=csv.QUOTE_NONNUMERIC).encode("utf-8-sig")

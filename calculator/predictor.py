@@ -114,8 +114,11 @@ class Predictor:
         missing = [name for name in self.features if name not in frame.columns]
         if missing:
             raise ValueError("Missing predictors: " + ", ".join(missing))
+        frame = frame.loc[:, self.features]
+        if frame.map(lambda value: isinstance(value, (bool, np.bool_, complex, np.complexfloating))).to_numpy().any():
+            raise ValueError("Predictors must be real numbers, not booleans or complex values.")
         try:
-            frame = frame.loc[:, self.features].astype(float)
+            frame = frame.astype(float)
         except (TypeError, ValueError) as exc:
             raise ValueError("All nine predictors must be numeric; sex is 0 or 1.") from exc
         if not np.isfinite(frame.to_numpy()).all():
