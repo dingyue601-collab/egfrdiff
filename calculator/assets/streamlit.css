@@ -1,0 +1,29 @@
+html,body,input,select,button,[data-testid="stMarkdownContainer"],[data-testid="stMetricValue"]{font-family:Arial,"Microsoft YaHei",sans-serif}
+.stApp{background:#f2f5f9;color:#182938}
+[data-testid="stHeader"]{height:0;background:transparent}
+.block-container{max-width:1480px;padding:32px 40px 20px}
+.st-key-input-card,.st-key-risk-card,.st-key-summary-card,.st-key-model-card,.st-key-batch-card,.st-key-batch-result{background:white;border:1px solid #eef0f3;border-radius:24px;box-shadow:0 10px 28px #1e3f5d09;padding:26px}
+.st-key-risk-card{padding:28px 32px 22px}
+.st-key-summary-card,.st-key-model-card{margin-top:22px;padding:26px 30px}
+.st-key-input-card [data-testid="stVerticalBlock"]{gap:.5rem}
+.st-key-input-card [data-testid="stNumberInput"] input{height:44px;font-size:16px}
+.st-key-input-card label p{font-size:16px;font-weight:400}
+.st-key-calculate button{width:100%;padding:13px 17px;color:white;font-size:20px;font-weight:700;background:#000;border:0;border-radius:11px}
+.st-key-calculate button p{font-size:20px;font-weight:700}
+.st-key-calculate button:hover,.st-key-calculate button:active{color:white;background:#000}
+.st-key-calculate_batch button,.st-key-calculate_batch button:hover,.st-key-calculate_batch button:active{color:white;background:#000;border-color:#000}
+.st-key-input-card [data-testid="stNumberInput"],.st-key-input-card [data-testid="stSelectbox"]{margin-bottom:8px}
+.group-title{margin:15px 0 8px}
+.stApp h2.section-title{font-size:21px;line-height:1.35;padding:0}
+.stApp h3.group-title{font-size:18px;line-height:1.4;padding:0}
+.stApp p.field-note{font-size:12px;line-height:1.65}
+.st-key-calculate button p{font-size:17px;white-space:normal}
+.hero{margin-bottom:28px}
+.hero h1{padding:0;color:white}
+.risk-number{font-family:Arial,sans-serif}
+.st-key-risk-card .empty-result{min-height:298px}
+.st-key-batch-card{margin-top:28px}
+.st-key-batch-result{margin-top:12px;padding:28px 32px 22px}
+.model-info a{color:inherit;text-decoration:none}
+.model-info a:hover{text-decoration:underline}
+@media(max-width:800px){.block-container{padding:16px}.st-key-input-card,.st-key-risk-card,.st-key-summary-card,.st-key-model-card{padding:23px;border-radius:20px}}

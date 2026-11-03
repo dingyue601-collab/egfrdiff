@@ -1,0 +1,4 @@
+.st-key-upload_zh [data-testid="stFileUploaderDropzoneInstructions"]>div{display:none}
+.st-key-upload_zh [data-testid="stFileUploaderDropzoneInstructions"]::after{content:"每个文件不超过200 MB · CSV";font-size:12px;color:#647583}
+.st-key-upload_zh [data-testid="stFileUploaderDropzone"] button,.st-key-upload_zh [data-testid="stFileUploaderDropzone"] button *{font-size:0}
+.st-key-upload_zh [data-testid="stFileUploaderDropzone"] button::after{content:"选择文件";font-size:14px}

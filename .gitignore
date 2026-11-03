@@ -1,0 +1,7 @@
+data/prepared/
+results/
+models/pretrained/
+__pycache__/
+*.pyc
+.streamlit/secrets.toml
+calculator/.streamlit/secrets.toml

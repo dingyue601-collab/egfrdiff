@@ -1,0 +1,4 @@
+Variable,PatientN,PatientObserved,PatientMissingPct,AdmissionN,AdmissionObserved,AdmissionMissingPct,Method,Definition
+bmi,2937,924,68.5393258426966,9890,2377,75.9656218402427,Excluded,Explicit valid source BMI; within one day of both markers
+uacr,2937,884,69.9012597889002,9890,2823,71.4560161779575,Excluded,Same-admission UACR; no cross-admission carry-forward
+ntprobnp,2937,1735,40.9261150834185,9890,6159,37.7249747219414,Excluded,Within one day of both markers
